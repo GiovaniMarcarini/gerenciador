@@ -1,5 +1,6 @@
 import 'package:gerenciador/model/tarefa.dart';
 import 'package:flutter/material.dart';
+import 'package:gerenciador/widgets/conteudo_form_dialog.dart';
 
 class ListaTarefasPage extends StatefulWidget{
 
@@ -9,9 +10,12 @@ class ListaTarefasPage extends StatefulWidget{
 
 class _ListaTarefasPageState extends State<ListaTarefasPage>{
 
+  var _ultimoId = 1;
+
   final tarefas = <Tarefa>[
     Tarefa(id: 1, descricao: 'Fazer Exercício 1', prazo: DateTime.now().add(Duration(days: 5))),
-    Tarefa(id: 2, descricao: 'Exercicio 2', prazo: DateTime.now().add(Duration(days: 3)))
+    Tarefa(id: 2, descricao: 'Exercicio 2', prazo: DateTime.now().add(Duration(days: 3))),
+    Tarefa(id: 3, descricao: 'Exercicio 3', prazo: DateTime.now().add(Duration(days: 8)))
   ];
 
 
@@ -19,6 +23,11 @@ class _ListaTarefasPageState extends State<ListaTarefasPage>{
     return Scaffold(
       appBar: criarAppBar(),
       body: criarBody(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _abrirForm,
+        tooltip: 'Nova Tarefa',
+        child: Icon(Icons.add),
+      ),
     );
   }
 
@@ -50,6 +59,42 @@ class _ListaTarefasPageState extends State<ListaTarefasPage>{
         );
       },
       separatorBuilder: (BuildContext context, int index) => Divider(),
+    );
+  }
+
+  void _abrirForm( {Tarefa? tarefaAtual, int? indice} ){
+    final key = GlobalKey<ConteudoFormDialogState>();
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: Text(tarefaAtual == null ? 'Nova tarefa': 'Alterar tarefa ${tarefaAtual.id}'),
+          content: ConteudoFormDialog(key: key, tarefaAtual: tarefaAtual,),
+          actions: [
+            TextButton(
+            child: const Text('Cancelar'),
+            onPressed: () => Navigator.of(context).pop()),
+        TextButton(
+        child: const Text('Salvar'),
+        onPressed: (){
+          if (key.currentState != null  && key.currentState!.dadosValidos()){
+            setState(() {
+              final novaTarafa = key.currentState!.novaTarefa;
+              if(indice == null){
+                novaTarafa.id = ++ _ultimoId;
+                tarefas.add(novaTarafa);
+        }else{
+                tarefas[indice] = novaTarafa;
+        }
+            });
+            Navigator.of(context).pop();
+        }
+        },
+        )
+
+          ],
+        );
+      }
     );
   }
 
