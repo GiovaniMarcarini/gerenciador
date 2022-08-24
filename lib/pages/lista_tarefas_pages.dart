@@ -9,15 +9,13 @@ class ListaTarefasPage extends StatefulWidget{
 }
 
 class _ListaTarefasPageState extends State<ListaTarefasPage>{
+  var _ultimoId = 0;
 
-  var _ultimoId = 1;
-
-  final tarefas = <Tarefa>[
-    Tarefa(id: 1, descricao: 'Fazer Exercício 1', prazo: DateTime.now().add(Duration(days: 5))),
-    Tarefa(id: 2, descricao: 'Exercicio 2', prazo: DateTime.now().add(Duration(days: 3))),
-    Tarefa(id: 3, descricao: 'Exercicio 3', prazo: DateTime.now().add(Duration(days: 8)))
+    final tarefas = <Tarefa>[
+    //Tarefa(id: 1, descricao: 'Fazer Exercício 1', prazo: DateTime.now().add(Duration(days: 5))),
+    //Tarefa(id: 2, descricao: 'Exercicio 2', prazo: DateTime.now().add(Duration(days: 3))),
+    //Tarefa(id: 3, descricao: 'Exercicio 3', prazo: DateTime.now().add(Duration(days: 8)))
   ];
-
 
   Widget build (BuildContext context){
     return Scaffold(
@@ -97,6 +95,4 @@ class _ListaTarefasPageState extends State<ListaTarefasPage>{
       }
     );
   }
-
-
 }
