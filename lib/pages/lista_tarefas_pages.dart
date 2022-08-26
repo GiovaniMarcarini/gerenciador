@@ -10,6 +10,8 @@ class ListaTarefasPage extends StatefulWidget{
 
 class _ListaTarefasPageState extends State<ListaTarefasPage>{
   var _ultimoId = 0;
+  static const ACAO_EDITAR = 'editar';
+  static const ACAO_EXCLUIR = 'excluir';
 
     final tarefas = <Tarefa>[
     //Tarefa(id: 1, descricao: 'Fazer Exercício 1', prazo: DateTime.now().add(Duration(days: 5))),
@@ -51,9 +53,19 @@ class _ListaTarefasPageState extends State<ListaTarefasPage>{
       itemCount: tarefas.length,
       itemBuilder: (BuildContext context, int index){
         final tarefa = tarefas[index];
-        return ListTile(
+        return PopupMenuButton<String>(
+          child: ListTile(
             title: Text('${tarefa.id} - ${tarefa.descricao}'),
             subtitle: Text('Prazo - ${tarefa.prazoFormatado}')
+        ),
+          itemBuilder: (BuildContext context) => criarItensMenuPopup(),
+        onSelected: (String valorSelecionado){
+            if (valorSelecionado == ACAO_EDITAR){
+              _abrirForm(tarefaAtual: tarefa, indice: index);
+        }else{
+              _excluir(index);
+            }
+        },
         );
       },
       separatorBuilder: (BuildContext context, int index) => Divider(),
@@ -91,6 +103,54 @@ class _ListaTarefasPageState extends State<ListaTarefasPage>{
         )
 
           ],
+        );
+      }
+    );
+  }
+  List<PopupMenuEntry<String>> criarItensMenuPopup(){
+    return[
+      PopupMenuItem<String>(
+        value: ACAO_EDITAR,
+        child: Row(
+          children: const [
+            Icon(Icons.edit, color: Colors.black),
+            Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Text('Editar'),
+            ),
+          ],
+        ),
+
+      ),
+      PopupMenuItem<String>(
+        value: ACAO_EXCLUIR,
+        child: Row(
+          children: const [
+            Icon(Icons.delete, color: Colors.red),
+            Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Text('Excluir'),
+            ),
+          ],
+        ),
+
+      ),
+    ];
+  }
+  void _excluir(int indice){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: Row(
+            children: const [
+              Icon(Icons.warning, color: Colors.red),
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text('Atenção'),
+              )
+            ],
+          ),
         );
       }
     );
