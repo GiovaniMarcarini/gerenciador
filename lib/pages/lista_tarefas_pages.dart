@@ -1,5 +1,6 @@
 import 'package:gerenciador/model/tarefa.dart';
 import 'package:flutter/material.dart';
+import 'package:gerenciador/pages/filtro_page.dart';
 import 'package:gerenciador/widgets/conteudo_form_dialog.dart';
 
 class ListaTarefasPage extends StatefulWidget{
@@ -37,7 +38,7 @@ class _ListaTarefasPageState extends State<ListaTarefasPage>{
       actions: [
         IconButton (
           icon: const Icon(Icons.filter_list),
-          onPressed: () {},
+          onPressed: _abrirPaginaFiltro,
         )
       ],
     );
@@ -107,6 +108,16 @@ class _ListaTarefasPageState extends State<ListaTarefasPage>{
       }
     );
   }
+  void _abrirPaginaFiltro(){
+    final navigator = Navigator.of(context);
+    navigator.pushNamed(FiltroPage.ROUTE_NAME).then((alterouValores){
+      if (alterouValores == true){
+
+      }
+    }
+    );
+  }
+
   List<PopupMenuEntry<String>> criarItensMenuPopup(){
     return[
       PopupMenuItem<String>(
@@ -148,9 +159,26 @@ class _ListaTarefasPageState extends State<ListaTarefasPage>{
               Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Text('Atenção'),
-              )
+              ),
             ],
           ),
+          content: Text('Esse registro será removido definitivamente'),
+          actions: [
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: Text('OK'),
+              onPressed: (){
+                Navigator.of(context).pop();
+                setState(() {
+                  tarefas.removeAt(indice);
+                });
+
+              },
+            )
+          ],
         );
       }
     );
