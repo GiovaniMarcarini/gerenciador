@@ -46,9 +46,14 @@ class _ListaTarefasPageState extends State<ListaTarefasPage>{
 
   Widget criarBody(){
     if (tarefas.isEmpty){
-      return const Center (child: Text('Nenhuma tarefa cadastrada',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-      ),);
+      return Center (child: Text('Nenhuma tarefa cadastrada',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+      );
     }
     return ListView.separated(
       itemCount: tarefas.length,
@@ -83,10 +88,22 @@ class _ListaTarefasPageState extends State<ListaTarefasPage>{
           content: ConteudoFormDialog(key: key, tarefaAtual: tarefaAtual,),
           actions: [
             TextButton(
-            child: const Text('Cancelar'),
+            child: Text('Cancelar',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+            ),
             onPressed: () => Navigator.of(context).pop()),
         TextButton(
-        child: const Text('Salvar'),
+        child: Text('Salvar',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).primaryColor,
+            ),
+        ),
         onPressed: (){
           if (key.currentState != null  && key.currentState!.dadosValidos()){
             setState(() {
@@ -123,11 +140,17 @@ class _ListaTarefasPageState extends State<ListaTarefasPage>{
       PopupMenuItem<String>(
         value: ACAO_EDITAR,
         child: Row(
-          children: const [
+          children: [
             Icon(Icons.edit, color: Colors.black),
             Padding(
               padding: EdgeInsets.only(left: 10),
-              child: Text('Editar'),
+              child: Text('Editar',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor,
+                  ),
+              ),
             ),
           ],
         ),
@@ -136,11 +159,17 @@ class _ListaTarefasPageState extends State<ListaTarefasPage>{
       PopupMenuItem<String>(
         value: ACAO_EXCLUIR,
         child: Row(
-          children: const [
+          children: [
             Icon(Icons.delete, color: Colors.red),
             Padding(
               padding: EdgeInsets.only(left: 10),
-              child: Text('Excluir'),
+              child: Text('Excluir',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor,
+                  ),
+              ),
             ),
           ],
         ),
@@ -154,22 +183,46 @@ class _ListaTarefasPageState extends State<ListaTarefasPage>{
       builder: (BuildContext context){
         return AlertDialog(
           title: Row(
-            children: const [
+            children: [
               Icon(Icons.warning, color: Colors.red),
               Padding(
                 padding: EdgeInsets.only(left: 10),
-                child: Text('Atenção'),
+                child: Text('Atenção',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                ),
               ),
             ],
           ),
-          content: Text('Esse registro será removido definitivamente'),
+          content: Text('Esse registro será removido definitivamente',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+          ),
           actions: [
             TextButton(
-              child: Text('Cancelar'),
+              child: Text('Cancelar',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+              ),
               onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
-              child: Text('OK'),
+              child: Text('OK',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor,
+                  )
+              ),
               onPressed: (){
                 Navigator.of(context).pop();
                 setState(() {
