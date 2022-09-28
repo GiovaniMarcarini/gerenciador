@@ -1,12 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:gerenciador/model/tarefa.dart';
 import 'package:intl/intl.dart';
 
 class ConteudoFormDialog extends StatefulWidget{
-  final Tarefa? tarefaAtual;
+  final Tarefa? tarefa;
 
-  ConteudoFormDialog( {Key? key, this.tarefaAtual}) : super(key: key);
+  ConteudoFormDialog( {Key? key, this.tarefa}) : super(key: key);
 
   ConteudoFormDialogState createState() => ConteudoFormDialogState();
 }
@@ -20,9 +19,9 @@ class ConteudoFormDialogState extends State<ConteudoFormDialog>{
 
   void initState(){
     super.initState();
-    if (widget.tarefaAtual != null){
-      _descricaoController.text = widget.tarefaAtual!.descricao;
-      _prazoController.text = widget.tarefaAtual!.prazoFormatado;
+    if (widget.tarefa != null){
+      _descricaoController.text = widget.tarefa!.descricao;
+      _prazoController.text = widget.tarefa!.prazoFormatado;
     }
   }
 
@@ -88,7 +87,7 @@ class ConteudoFormDialogState extends State<ConteudoFormDialog>{
   bool dadosValidos() => _formKey.currentState?.validate() == true;
 
   Tarefa get novaTarefa => Tarefa(
-    id: widget.tarefaAtual?.id ?? 0,
+    id: widget.tarefa?.id ?? 0,
     descricao: _descricaoController.text,
     prazo: _prazoController.text.isEmpty ? null : _dateFormat.parse(_prazoController.text),
   );
