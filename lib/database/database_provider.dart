@@ -29,12 +29,15 @@ class DatabaseProvider {
       CREATE TABLE ${Tarefa.nomeTabela} (
         ${Tarefa.campoId} INTEGER PRIMARY KEY AUTOINCREMENT,
         ${Tarefa.campoDescricao} TEXT NOT NULL,
-        ${Tarefa.campoPrazo} TEXT);
+        ${Tarefa.campoPrazo} TEXT,
+      );
     ''');
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    switch (oldVersion) {
 
+    }
   }
 
   Future<void> close() async {

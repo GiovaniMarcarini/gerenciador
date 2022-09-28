@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../dao/tarefa_dao.dart';
 import '../model/tarefa.dart';
 import '../widgets/conteudo_form_dialog.dart';
@@ -119,14 +120,14 @@ class _ListaTarefasPageState extends State<ListaTarefasPage> {
   ];
 
   void _abrirForm({Tarefa? tarefa}) {
-    final key = GlobalKey<ConteudoFormDialogState>();
+    final key = GlobalKey<ConteudoDialogFormState>();
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
         title: Text(
           tarefa == null ? 'Nova Tarefa' : 'Alterar Tarefa ${tarefa.id}',
         ),
-        content: ConteudoFormDialog(
+        content: ConteudoDialogForm(
           key: key,
           tarefa: tarefa,
         ),
@@ -200,8 +201,10 @@ class _ListaTarefasPageState extends State<ListaTarefasPage> {
       _atualizarLista();
     }
   }
-
   void _atualizarLista() async {
+
+    // Carregar os valores do SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
     final tarefas = await _dao.listar();
     setState(() {
       _tarefas.clear();
