@@ -73,7 +73,7 @@ class _ListaTarefasPageState extends State<ListaTarefasPage> {
               '${tarefa.id} - ${tarefa.descricao}',
             ),
             subtitle: Text(
-              tarefa.prazoFormatado,
+              tarefa.prazoFormatado == '' ? '' : 'Prazo - ${tarefa.prazoFormatado}'
             ),
           ),
           itemBuilder: (_) => _criarItensMenuPopup(),
@@ -202,10 +202,16 @@ class _ListaTarefasPageState extends State<ListaTarefasPage> {
     }
   }
   void _atualizarLista() async {
-
-    // Carregar os valores do SharedPreferences
     final prefs = await SharedPreferences.getInstance();
-    final tarefas = await _dao.listar();
+    final campoOrdenacao = prefs.getString(FiltroPage.chaveCampoOrdenacao) ?? Tarefa.campoId;
+    final usarOrdemDecrescente = prefs.getBool(FiltroPage.chaveOrdenacaoDrescente) == true;
+    final filtroDescricao = prefs.getString(FiltroPage.chaveFiltroDescricao) ?? '';
+
+    final tarefas = await _dao.listar(
+      filtro: filtroDescricao,
+      campoOrdenacao: campoOrdenacao,
+      usarOrdemDecrescente: usarOrdemDecrescente,
+    );
     setState(() {
       _tarefas.clear();
       if (tarefas.isNotEmpty) {
