@@ -73,7 +73,7 @@ class _ListaTarefasPageState extends State<ListaTarefasPage> {
               '${tarefa.id} - ${tarefa.descricao}',
             ),
             subtitle: Text(
-              tarefa.prazoFormatado == '' ? '' : 'Prazo - ${tarefa.prazoFormatado}'
+              tarefa.prazoFormatado == '' ? 'Data não definida' : 'Prazo - ${tarefa.prazoFormatado}'
             ),
           ),
           itemBuilder: (_) => _criarItensMenuPopup(),
@@ -96,11 +96,17 @@ class _ListaTarefasPageState extends State<ListaTarefasPage> {
     PopupMenuItem(
       value: acaoEditar,
       child: Row(
-        children: const [
+        children: [
           Icon(Icons.edit, color: Colors.black),
           Padding(
             padding: EdgeInsets.only(left: 10),
-            child: Text('Editar'),
+            child: Text('Editar',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
           ),
         ],
       ),
@@ -108,11 +114,17 @@ class _ListaTarefasPageState extends State<ListaTarefasPage> {
     PopupMenuItem(
       value: acaoExcluir,
       child: Row(
-        children: const [
+        children: [
           Icon(Icons.delete, color: Colors.red),
           Padding(
             padding: EdgeInsets.only(left: 10),
-            child: Text('Excluir'),
+            child: Text('Excluir',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
           ),
         ],
       ),
@@ -126,6 +138,11 @@ class _ListaTarefasPageState extends State<ListaTarefasPage> {
       builder: (_) => AlertDialog(
         title: Text(
           tarefa == null ? 'Nova Tarefa' : 'Alterar Tarefa ${tarefa.id}',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).primaryColor,
+          ),
         ),
         content: ConteudoDialogForm(
           key: key,
@@ -133,11 +150,23 @@ class _ListaTarefasPageState extends State<ListaTarefasPage> {
         ),
         actions: [
           TextButton(
-            child: Text('Cancelar'),
+            child: Text('Cancelar',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: Text('Salvar'),
+            child: Text('Salvar',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
             onPressed: () {
               if (key.currentState?.dadosValidos() != true) {
                 return;
@@ -162,21 +191,41 @@ class _ListaTarefasPageState extends State<ListaTarefasPage> {
       builder: (_) => AlertDialog(
         title: Row(
           children: [
-            Icon(Icons.warning),
+            Icon(Icons.warning,
+            color: Colors.red,
+            ),
             Padding(
               padding: EdgeInsets.only(left: 10),
-              child: Text('Atenção'),
+              child: Text('Atenção',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
             ),
           ],
         ),
         content: Text('Esse registro será removido definitivamente.'),
         actions: [
           TextButton(
-            child: Text('Cancelar'),
+            child: Text('Cancelar',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: Text('OK'),
+            child: Text('OK',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
             onPressed: () {
               Navigator.pop(context);
               if (tarefa.id == null) {

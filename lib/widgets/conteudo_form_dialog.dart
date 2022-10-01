@@ -53,7 +53,9 @@ class ConteudoDialogFormState extends State<ConteudoDialogForm> {
             decoration: InputDecoration(
               labelText: 'Prazo',
               prefixIcon: IconButton(
-                icon: Icon(Icons.calendar_today),
+                icon: Icon(Icons.calendar_today,
+                color: Theme.of(context).primaryColor,
+                ),
                 onPressed: _mostrarCalendario,
               ),
               suffixIcon: IconButton(
