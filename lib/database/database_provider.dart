@@ -4,7 +4,7 @@ import '../model/tarefa.dart';
 
 class DatabaseProvider {
   static const _dbName = 'cadastro_tarefas.db';
-  static const _dbVersion = 1;
+  static const _dbVersion = 2;
 
   DatabaseProvider._init();
   static final DatabaseProvider instance = DatabaseProvider._init();
@@ -30,12 +30,18 @@ class DatabaseProvider {
         ${Tarefa.campoId} INTEGER PRIMARY KEY AUTOINCREMENT,
         ${Tarefa.campoDescricao} TEXT NOT NULL,
         ${Tarefa.campoPrazo} TEXT,
-      );
+        ${Tarefa.campoFinalizada} INTEGER NOT NULL DEFAULT 0
+      )
     ''');
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     switch (oldVersion) {
+      case 1:
+        await db.execute('''
+          ALTER TABLE${Tarefa.nomeTabela}
+          ADD ${Tarefa.campoFinalizada} INTEGER NOT NULL DEFAULT 0;
+        ''');
 
     }
   }

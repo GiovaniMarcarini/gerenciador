@@ -51,6 +51,7 @@ class TarefaDao {
         Tarefa.campoId,
         Tarefa.campoDescricao,
         Tarefa.campoPrazo,
+        Tarefa.campoFinalizada,
       ],
       where: where,
       orderBy: orderBy,
